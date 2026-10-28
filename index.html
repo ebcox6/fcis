@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vote</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;900&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+body{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+header{background:var(--navy);color:#fff;padding:22px 20px 18px}
+header p{margin:0;color:var(--orange);font-weight:700;font-size:14px;font-family:'Poppins',Arial,sans-serif}
+header h1{margin:4px 0 0;font-size:24px;line-height:1.2}
+.bar{height:6px;background:var(--panel)}.bar div{height:100%;background:var(--orange);width:0;transition:width .2s}
+main{max-width:560px;margin:0 auto;padding:22px 20px 40px}
+.step{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin:0 0 6px;font-family:'Poppins',Arial,sans-serif}
+h2{font-size:22px;line-height:1.3;margin:0 0 16px}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font-family:'Nunito',Arial,sans-serif;font-size:17px;font-weight:600;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:14px;margin:0 0 10px;min-height:56px}
+.opt[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:#fff}
+.opt b{flex:0 0 30px;height:30px;border-radius:50%;background:var(--panel);color:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Poppins',Arial,sans-serif;font-size:15px}
+.opt[aria-pressed="true"] b{background:var(--orange);color:var(--navy)}
+input[type=text]{width:100%;font:inherit;font-size:20px;border:2px solid var(--line);border-radius:12px;padding:14px;color:var(--ink)}
+input:focus,button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.btn{font-size:16px;font-weight:700;border:none;border-radius:999px;padding:14px 24px;min-height:50px}
+.btn.primary{background:var(--orange);color:var(--navy)}
+.btn.primary:disabled{opacity:.4}
+.btn.ghost{background:transparent;border:2px solid var(--line);color:var(--ink)}
+.note{color:var(--ink2);font-size:15px}
+.done{text-align:center;padding-top:30px}
+.done h2{font-size:28px}
+.err{background:#fff4ec;border-left:6px solid var(--orange);padding:12px 14px;border-radius:10px;color:var(--ink);font-size:15px}
+</style>
+</head>
+<body>
+<header><p id="sub"></p><h1 id="ttl"></h1></header>
+<div class="bar"><div id="prog"></div></div>
+<main id="app"></main>
+<script src="config.js"></script>
+<script src="quiz.js"></script>
+<script src="db.js"></script>
+<script>
+var C=window.RPR_CONFIG,Q=window.RPR_QUIZ,app=document.getElementById("app");
+document.getElementById("ttl").textContent=C.title;document.getElementById("sub").textContent="Quick warm-up \u00b7 about 90 seconds";
+document.title=C.title+": Vote";
+var KEY="rpr-voter-"+(new URLSearchParams(location.search).get("s")||C.session),S;
+try{S=JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){S=null;}
+if(!S){S={id:Math.random().toString(36).slice(2)+Date.now().toString(36),w:"",a:{},step:0,sent:false};}
+function keep(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var total=Q.questions.length+1;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function prog(){document.getElementById("prog").style.width=(S.sent?100:Math.round(S.step/total*100))+"%";}
+function render(){
+  prog();
+  if(S.sent){app.innerHTML='<div class="done"><h2>You\u2019re in.</h2><p class="note">Eyes on the big screen. Thanks for sharing. We’ll come back to your answers later in the session.</p><div class="nav" style="justify-content:center;flex-direction:column;align-items:center;gap:12px"><a class="btn primary" href="'+esc(C.resources||"resources/")+'" style="text-decoration:none;display:inline-block">Open the session resources</a><button class="btn ghost" id="edit">Change my answers</button></div><p class="note" style="margin-top:14px">The kits, every case and source, and your first-step card are all there.</p></div>';
+    document.getElementById("edit").onclick=function(){S.sent=false;S.step=0;keep();render();};return;}
+  if(S.step===0){
+    app.innerHTML='<p class="step">Warm-up</p><h2>'+esc(Q.warmup)+'</h2><input type="text" id="w" maxlength="24" autocomplete="off" autocapitalize="none" placeholder="One word" value="'+esc(S.w)+'"><p class="note">One word only. It goes into the word cloud.</p><div class="nav"><span></span><button class="btn primary" id="nx">Next</button></div>';
+    var w=document.getElementById("w"),nx=document.getElementById("nx");
+    function ok(){nx.disabled=!w.value.trim();}ok();
+    w.addEventListener("input",function(){w.value=w.value.replace(/\s+/g,"");S.w=w.value;keep();ok();});
+    w.addEventListener("keydown",function(e){if(e.key==="Enter"&&w.value.trim())go(1);});
+    nx.onclick=function(){go(1);};return;}
+  var q=Q.questions[S.step-1],v=S.a[q.id];
+  var h='<p class="step">Question '+S.step+' of '+Q.questions.length+'</p><h2>'+esc(q.text)+'</h2>';
+  if(q.rank){
+    var r=Array.isArray(v)?v:[];
+    h+='<p class="note" style="margin-top:-8px">Tap your top pick. Keep tapping to rank the rest if you like.</p>';
+    h+=q.options.map(function(o,i){var pos=r.indexOf(i);return '<button class="opt" data-i="'+i+'" aria-pressed="'+(pos>-1)+'"><b>'+(pos>-1?pos+1:"")+'</b><span>'+esc(o[0])+'</span></button>';}).join("");
+    h+='<button class="btn ghost" id="clr" style="margin-top:4px">Start over</button>';
+  }else{
+    h+=q.options.map(function(o,i){return '<button class="opt" data-i="'+i+'" aria-pressed="'+(v===i)+'"><b>'+"ABCD"[i]+'</b><span>'+esc(o[0])+'</span></button>';}).join("");
+  }
+  var last=S.step===total-1,ready=q.rank?(Array.isArray(v)&&v.length>0):(typeof v==="number");
+  h+='<div id="msg"></div><div class="nav"><button class="btn ghost" id="bk">Back</button><button class="btn primary" id="nx"'+(ready?"":" disabled")+'>'+(last?"Send my answers":"Next")+'</button></div>';
+  app.innerHTML=h;
+  [].forEach.call(app.querySelectorAll(".opt"),function(b){b.onclick=function(){var i=+b.getAttribute("data-i");
+    if(q.rank){var r=Array.isArray(S.a[q.id])?S.a[q.id].slice():[];if(r.indexOf(i)===-1)r.push(i);S.a[q.id]=r;}
+    else{S.a[q.id]=i;}
+    keep();sync();render();
+    if(!q.rank&&!last)setTimeout(function(){go(S.step+1);},250);};});
+  var clr=document.getElementById("clr");if(clr)clr.onclick=function(){S.a[q.id]=[];keep();render();};
+  document.getElementById("bk").onclick=function(){go(S.step-1);};
+  document.getElementById("nx").onclick=function(){last?send():go(S.step+1);};
+}
+var syncT=null;
+function sync(){clearTimeout(syncT);syncT=setTimeout(async function(){var db=await window.RPR_DB;if(!db||!S.w.trim())return;try{await db.save(S.id,{w:S.w.trim().toLowerCase().slice(0,24),a:S.a});}catch(e){}},400);}
+function go(n){if(n>S.step)sync();S.step=Math.max(0,Math.min(total-1,n));keep();render();window.scrollTo(0,0);}
+async function send(){
+  var b=document.getElementById("nx"),m=document.getElementById("msg");b.disabled=true;b.textContent="Sending...";
+  var db=await window.RPR_DB;
+  if(!db){m.innerHTML='<p class="err">Voting isn\u2019t connected yet. Let the presenter know.</p>';b.disabled=false;b.textContent="Send my answers";return;}
+  try{await db.save(S.id,{w:S.w.trim().toLowerCase().slice(0,24),a:S.a});S.sent=true;keep();render();}
+  catch(e){m.innerHTML='<p class="err">That didn\u2019t go through. Check your connection and tap Send again.</p>';b.disabled=false;b.textContent="Send my answers";}
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Human-Centered AI Classrooms: Resources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;900&family=Nunito:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001e62; --blue:#006cff; --orange:#ef7225; --ink2:#42486a; --line:#d8d7df; --smoke:#eaeaea;
+  --bg:#ffffff; --surface:#f4f4f7; --text:#001e62; --muted:#42486a; --card:#ffffff; --hero:#001e62; --heroText:#ffffff; --heroMuted:#d8d7df;
+  --joy:#ef7225; --joyText:#001e62; --int:#006cff; --intText:#ffffff; --saf:#001e62; --safText:#ffffff; --safEdge:#001e62; --link:#006cff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a1430; --surface:#111d40; --text:#eef0f7; --muted:#b9bdd0; --card:#132250; --line:#2a3766; --hero:#001542; --heroText:#ffffff; --heroMuted:#c9cce0;
+    --saf:#eef0f7; --safText:#001e62; --safEdge:#eef0f7; --link:#6aa8ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a1430; --surface:#111d40; --text:#eef0f7; --muted:#b9bdd0; --card:#132250; --line:#2a3766; --hero:#001542; --heroText:#ffffff; --heroMuted:#c9cce0;
+  --saf:#eef0f7; --safText:#001e62; --safEdge:#eef0f7; --link:#6aa8ff; color-scheme: dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--bg); color:var(--text); font:400 17px/1.55 'Nunito', 'Segoe UI', Arial, sans-serif; }
+h1,h2,h3{ font-family:'Poppins', 'Segoe UI', Arial, sans-serif; line-height:1.15; margin:0; }
+a{ color:var(--link); }
+:focus-visible{ outline:3px solid var(--orange); outline-offset:2px; border-radius:6px; }
+.wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+section{ padding:56px 0; }
+section + section{ border-top:1px solid var(--line); }
+.lead{ color:var(--muted); max-width:62ch; margin:10px 0 0; }
+h2{ font-size:clamp(26px,4vw,34px); font-weight:700; }
+
+/* Hero */
+.hero{ background:var(--hero); color:var(--heroText); padding:48px 0 56px; border-top:none; }
+.hero .wrap{ display:grid; grid-template-columns:1.2fr 1fr; gap:32px; align-items:center; }
+.hero .when{ color:var(--orange); font-weight:700; margin:0 0 14px; }
+.hero h1{ font-size:clamp(34px,5.6vw,58px); font-weight:900; letter-spacing:-0.5px; }
+.hero .sub{ color:var(--heroMuted); font-size:20px; margin:14px 0 0; max-width:34ch; }
+.anchor{ margin-top:28px; padding:18px 20px; border-left:6px solid var(--orange); background:rgba(255,255,255,0.06); border-radius:0 10px 10px 0; }
+.anchor p{ margin:0; font-family:'Poppins',Arial,sans-serif; font-weight:700; font-size:19px; line-height:1.35; }
+.venn{ width:100%; max-width:420px; justify-self:center; }
+@media (max-width:760px){ .hero .wrap{ grid-template-columns:1fr; } .venn{ max-width:300px; order:-1; } }
+
+/* Questions */
+.qs{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px; }
+.q{ background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+.q h3{ font-size:18px; padding:10px 16px; }
+.q p{ margin:0; padding:14px 16px 18px; }
+.joy h3{ background:var(--joy); color:var(--joyText); }
+.int h3{ background:var(--int); color:var(--intText); }
+.saf h3{ background:var(--saf); color:var(--safText); }
+@media (max-width:760px){ .qs{ grid-template-columns:1fr; } }
+
+/* Kits */
+.kits{ margin-top:24px; display:grid; gap:14px; }
+.kit{ display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; padding:18px 20px; background:var(--surface); border-radius:14px; border:1px solid var(--line); }
+.kit h3{ font-size:20px; }
+.kit p{ margin:6px 0 0; color:var(--muted); }
+.kit .who{ font-weight:700; color:var(--text); }
+.btn{ display:inline-block; font:700 15px 'Poppins',Arial,sans-serif; padding:12px 18px; border-radius:10px; background:var(--orange); color:#001e62; text-decoration:none; border:0; cursor:pointer; white-space:nowrap; }
+.btn.secondary{ background:transparent; color:var(--text); border:2px solid var(--line); }
+.btn[aria-disabled="true"]{ background:var(--smoke); color:#42486a; cursor:not-allowed; }
+.note{ font-size:14px; color:var(--muted); margin-top:10px; }
+@media (max-width:620px){ .kit{ grid-template-columns:1fr; } }
+
+/* Tabs */
+.tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:24px; }
+.tab{ font:700 15px 'Poppins',Arial,sans-serif; padding:10px 16px; border-radius:999px; border:2px solid var(--line); background:transparent; color:var(--text); cursor:pointer; }
+.tab[aria-selected="true"].t-joy{ background:var(--joy); border-color:var(--joy); color:var(--joyText); }
+.tab[aria-selected="true"].t-int{ background:var(--int); border-color:var(--int); color:var(--intText); }
+.tab[aria-selected="true"].t-saf{ background:var(--saf); border-color:var(--safEdge); color:var(--safText); }
+.tab[aria-selected="true"].t-plain{ background:var(--text); border-color:var(--text); color:var(--bg); }
+.panel{ margin-top:20px; }
+.panel[hidden]{ display:none; }
+.case{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px; }
+.case h3{ font-size:22px; }
+.case .src{ font-size:14px; color:var(--muted); margin-top:10px; }
+.twocol{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
+@media (max-width:760px){ .twocol{ grid-template-columns:1fr; } }
+.twocol h3{ font-size:18px; margin-bottom:8px; }
+ol.moves{ margin:0; padding-left:22px; }
+ol.moves li{ margin-bottom:12px; }
+ol.moves .why{ display:block; color:var(--muted); font-size:15px; }
+ul.plain{ margin:0; padding-left:20px; }
+ul.plain li{ margin-bottom:8px; }
+
+/* First-step card */
+.cardform{ margin-top:20px; background:var(--card); border:2px solid var(--text); border-radius:14px; padding:22px; }
+.cardform h3{ font-size:20px; margin-bottom:4px; }
+.field{ margin-top:16px; }
+.field label{ display:block; font-weight:700; margin-bottom:6px; }
+.field textarea{ width:100%; min-height:62px; font:400 16px/1.45 'Nunito',Arial,sans-serif; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--text); resize:vertical; }
+.actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; align-items:center; }
+.status{ font-size:14px; color:var(--muted); }
+
+/* Sources */
+.srcs{ margin-top:20px; display:grid; gap:12px; }
+.srcrow{ padding:14px 0; border-bottom:1px solid var(--line); }
+.srcrow:last-child{ border-bottom:0; }
+.srcrow .tag{ display:inline-block; font:700 12px 'Poppins',Arial,sans-serif; padding:3px 10px; border-radius:999px; margin-right:6px; }
+.tag.joy{ background:var(--joy); color:var(--joyText); }
+.tag.int{ background:var(--int); color:var(--intText); }
+.tag.saf{ background:var(--saf); color:var(--safText); }
+.srcrow p{ margin:6px 0 0; }
+
+footer{ background:var(--hero); color:var(--heroMuted); padding:36px 0 44px; }
+footer strong{ color:#fff; }
+footer a{ color:#fff; }
+@media print{
+  .hero,.tabs,section:not(#first-step),footer,.actions{ display:none !important; }
+  #first-step{ padding:0; } .cardform{ border:1px solid #000; }
+  body{ background:#fff; color:#000; }
+}
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="when">FCIS 2026 &middot; November 6</p>
+      <h1>Designing Human-Centered AI Classrooms</h1>
+      <p class="sub">Your resources for protecting joy, integrity, and digital safety. Everything from today’s session is here.</p>
+      <div class="anchor"><p>Humans own the thinking, the relationships, and the final call.</p></div>
+    </div>
+    <svg class="venn" viewBox="0 0 400 380" role="img" aria-label="Three overlapping circles labeled Joy, Integrity, and Safety, with a person at the center">
+      <circle cx="200" cy="130" r="112" fill="#ef7225" fill-opacity="0.92" stroke="#001e62" stroke-width="3"/>
+      <circle cx="136" cy="240" r="112" fill="#006cff" fill-opacity="0.88" stroke="#001e62" stroke-width="3"/>
+      <circle cx="264" cy="240" r="112" fill="#ffffff" fill-opacity="0.85" stroke="#001e62" stroke-width="3"/>
+      <text x="200" y="78" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="20" fill="#001e62">Joy</text>
+      <text x="100" y="292" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="20" fill="#ffffff">Integrity</text>
+      <text x="302" y="292" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="20" fill="#001e62">Safety</text>
+      <circle cx="200" cy="203" r="30" fill="#001e62" stroke="#ffffff" stroke-width="4"/>
+      <circle cx="200" cy="194" r="8" fill="#ffffff"/>
+      <path d="M186 216 q14 -16 28 0" fill="#ffffff"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+<section id="questions">
+  <div class="wrap">
+    <h2>The Three Protections</h2>
+    <p class="lead">Run any AI decision in your classroom or school through three questions.</p>
+    <div class="qs">
+      <div class="q joy"><h3>Joy</h3><p>Does this use of AI give students more time for the parts of learning worth doing, or take those parts away?</p></div>
+      <div class="q int"><h3>Integrity</h3><p>Can the student still show their own thinking and be honest about how AI was used?</p></div>
+      <div class="q saf"><h3>Safety</h3><p>Do we know where student data goes, and is everyone in the room protected?</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="kits">
+  <div class="wrap">
+    <h2>Take-home kits</h2>
+    <p class="lead">Printable PDFs, free to copy and adapt for your school.</p>
+    <div class="kits">
+      <div class="kit">
+        <div><h3>Teacher Classroom Kit</h3><p><span class="who">For teachers.</span> Assignment AI-use card, Think First, Then AI planner, See, Think, Wonder for AI output, student AI-use note, conference questions, a human-only zones poster, and a safety check. 8 pages.</p></div>
+        <a class="btn kitlink" data-file="teacher" href="#">Open the kit</a>
+      </div>
+      <div class="kit">
+        <div><h3>Administrator School Kit</h3><p><span class="who">For school leaders.</span> Three Protections audit, handbook language starters, a fair process for detector flags, an AI tool inventory, a family message template, and a 30-minute faculty meeting plan. 6 pages.</p></div>
+        <a class="btn kitlink" data-file="admin" href="#">Open the kit</a>
+      </div>
+      <div class="kit">
+        <div><h3>Family Guide</h3><p><span class="who">For parents.</span> The three questions for families, questions to ask your school, talking with kids about fake images and AI “friends,” homework and AI, and a family AI agreement. 5 pages.</p></div>
+        <a class="btn kitlink" data-file="family" href="#">Open the guide</a>
+      </div>
+    </div>
+    <p class="note" id="kitnote" hidden>The kits will be linked here before the session.</p>
+  </div>
+</section>
+
+<section id="deep-dives">
+  <div class="wrap">
+    <h2>All three deep dives</h2>
+    <p class="lead">Each room goes deep on one protection. Here are all three: the case, the questions to discuss, and three moves you can use.</p>
+    <div class="tabs" role="tablist" aria-label="Deep dives">
+      <button class="tab t-joy" role="tab" aria-selected="true" aria-controls="dd-joy" id="tab-joy">Joy</button>
+      <button class="tab t-int" role="tab" aria-selected="false" aria-controls="dd-int" id="tab-int">Integrity</button>
+      <button class="tab t-saf" role="tab" aria-selected="false" aria-controls="dd-saf" id="tab-saf">Safety</button>
+    </div>
+
+    <div class="panel" id="dd-joy" role="tabpanel" aria-labelledby="tab-joy">
+      <div class="case">
+        <h3>Same goal, opposite moves</h3>
+        <p>On September 2, 2026, New York City Public Schools paused student-facing generative AI for one year from 2-K through 8th grade and banned AI companion chatbots in every grade. Teachers kept approved AI for planning and operations, but not for grading, behavior monitoring, or placement. The mayor’s reason was human connection. The same school year, 64% of educators who used AI said it gave them more time for the parts of teaching that matter most.</p>
+        <p class="src">Sources: NYC Public Schools announcement, as reported by K-12 Dive, Sept. 2, 2026. Walton Family Foundation and Gallup educator survey, released Oct. 14, 2026 (13% “a lot more time” plus 51% “somewhat more time”).</p>
+      </div>
+      <div class="twocol">
+        <div><h3>Discuss</h3><ul class="plain"><li>Which of the Three Protections does the pause guard? Is it only one?</li><li>What do students lose when they never practice AI with an adult nearby?</li><li>How would you protect the same human connection without a ban?</li></ul></div>
+        <div><h3>Three moves</h3><ol class="moves">
+          <li><strong>Think first, then AI.</strong> Students draft or solve on their own first, then AI questions or critiques their thinking.<span class="why">In an MIT Media Lab study, writers who started without AI and then revised with it showed more ownership (Kosmyna et al., June 2025 preprint, 54 adult participants).</span></li>
+          <li><strong>Human-only zones.</strong> Name where AI stays out: discussion, peer feedback, first creative attempts.<span class="why">New York drew this line for teachers too.</span></li>
+          <li><strong>Reinvest saved time.</strong> Decide which human thing the saved time goes to: a conference, a small group, a call home.<span class="why">Arkansas teachers turned saved time into daily intervention blocks (Gallup and Walton Family Foundation research, via KUAF, Nov. 18, 2025).</span></li>
+        </ol></div>
+      </div>
+    </div>
+
+    <div class="panel" id="dd-int" role="tabpanel" aria-labelledby="tab-int" hidden>
+      <div class="case">
+        <h3>When the score becomes the verdict</h3>
+        <p>In November 2024, an Adelphi University freshman’s essay, written with a program tutor, got a zero after Turnitin reported it as fully AI-written. His appeal went to the same official who made the finding, and two detectors that scored it human-written were never considered. In January 2026, a New York court annulled the finding and ordered his record expunged. The court faulted the process, not the tool. It also noted that courts give private schools broad discretion and check whether a school followed its own rules.</p>
+        <p>In K-12: in May 2026, a Palo Alto family filed a federal complaint after their sophomore’s essay was flagged 76% AI. The complaint argues the score was treated as decisive. These are allegations, not findings.</p>
+        <p class="src">Sources: <a href="https://www.nycourts.gov/reporter/3dseries/2026/2026_26021.htm" target="_blank" rel="noopener">Matter of Newby v Adelphi Univ., 2026 NY Slip Op 26021</a> (Jan. 28, 2026). <a href="https://www.almanacnews.com/palo-alto-schools/2026/05/11/parent-sues-palo-alto-school-district-over-artificial-intelligence-procedures/" target="_blank" rel="noopener">The Almanac / Palo Alto Online</a>, May 11, 2026.</p>
+      </div>
+      <div class="twocol">
+        <div><h3>Discuss</h3><ul class="plain"><li>Name the moment a person should have stepped in before the zero.</li><li>If not a score, what would convince you a student did the work?</li><li>What would a fair AI-integrity process look like at your school?</li></ul></div>
+        <div><h3>Three moves</h3><ol class="moves">
+          <li><strong>Make AI use visible.</strong> State the allowed AI use on every assignment, and ask students to note how they used it.<span class="why">Hingham High held up in court because its rules were clear before anything went wrong (Harris v. Adams, D. Mass., Nov. 20, 2024).</span></li>
+          <li><strong>Collect the process.</strong> Drafts, version history, and a two-minute “walk me through it” conversation.<span class="why">Process evidence is something a parent, an appeal, or a court can follow.</span></li>
+          <li><strong>A score is a question.</strong> A detector flag starts a conversation and never decides a grade. Appeals go to someone new.<span class="why">That is exactly where Adelphi failed.</span></li>
+        </ol></div>
+      </div>
+    </div>
+
+    <div class="panel" id="dd-saf" role="tabpanel" aria-labelledby="tab-saf" hidden>
+      <div class="case">
+        <h3>Did the AI fail, or did it work?</h3>
+        <p>On December 9, 2025, an AI weapons-detection camera at Lawton Chiles Middle School in Oviedo flagged a student holding something like a rifle. A reviewer at the company confirmed the alert, the school locked down, and police responded. It was a clarinet, carried by a student in camo for a themed dress-up day. Families got a quick message, but not the context. The district said the system worked as intended. Nationally, only 4% of parents said their school had told them about the risks and penalties of sharing sexually explicit deepfakes.</p>
+        <p class="src">Sources: <a href="https://www.clickorlando.com/news/local/2025/12/18/why-ai-and-a-student-with-a-clarinet-put-a-seminole-county-school-on-lockdown/" target="_blank" rel="noopener">WKMG News 6 (ClickOrlando)</a>, Dec. 18, 2025. Center for Democracy &amp; Technology, “In Deep Trouble,” Sept. 2024.</p>
+      </div>
+      <div class="twocol">
+        <div><h3>Discuss</h3><ul class="plain"><li>Did it fail or work? Make the case both ways.</li><li>Name every person in the chain. Who could have changed the outcome?</li><li>What would you tell families within the hour, and who decides?</li></ul></div>
+        <div><h3>Three moves</h3><ol class="moves">
+          <li><strong>Know your tools’ data.</strong> For each AI tool students use: what data goes in, where it lives, and who reviews it.<span class="why">The PowerSchool breach exposed Social Security numbers, grades, and medical information at schools across the country (TechCrunch, 2025).</span></li>
+          <li><strong>Write the deepfake rule.</strong> Name AI-generated sexual images and impersonation in your harassment policy, and teach it.<span class="why">Hingham’s AI policy covered only cheating, so no rule applied when a middle schooler made a fake nude of a classmate (<a href="https://www.bostonglobe.com/2026/04/09/metro/ai-generated-naked-deepfakes-in-schools/" target="_blank" rel="noopener">The Boston Globe</a>, Apr. 9, 2026).</span></li>
+          <li><strong>Tell families early.</strong> Keep an AI-incident message ready: what happened, what the tool did, who decided.<span class="why">In Oviedo, the missing context became the story.</span></li>
+        </ol></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="first-step">
+  <div class="wrap">
+    <h2>Your first step</h2>
+    <p class="lead">Pick where you’ll start. Your answers save on this device only, and you can copy or print your card.</p>
+    <div class="tabs" role="tablist" aria-label="First-step cards">
+      <button class="tab t-plain" role="tab" aria-selected="true" data-card="monday">Monday morning</button>
+      <button class="tab t-plain" role="tab" aria-selected="false" data-card="semester">This semester</button>
+      <button class="tab t-plain" role="tab" aria-selected="false" data-card="school">School-wide</button>
+    </div>
+    <form class="cardform" id="cardform" onsubmit="return false">
+      <h3 id="cardtitle">Monday morning: one move, one classroom</h3>
+      <div id="fields"></div>
+      <div class="actions">
+        <button class="btn" type="button" id="copybtn">Copy my card</button>
+        <button class="btn secondary" type="button" id="printbtn">Print my card</button>
+        <span class="status" id="status" aria-live="polite"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <h2>Cases and sources</h2>
+    <p class="lead">Every case and figure used in the session, with where it came from.</p>
+    <div class="srcs">
+      <div class="srcrow"><span class="tag joy">Joy</span><strong>New York City’s student AI pause</strong><p>One-year pause on student-facing generative AI, 2-K through 8th grade, announced Sept. 2, 2026. Source: NYC Public Schools, as reported by K-12 Dive.</p></div>
+      <div class="srcrow"><span class="tag joy">Joy</span><strong>Teachers and saved time</strong><p>64% of educators who used AI in 2025-26 said it gave them more time for what matters most. Source: Walton Family Foundation and Gallup, released Oct. 14, 2026.</p></div>
+      <div class="srcrow"><span class="tag joy">Joy</span><strong>Think first, then AI</strong><p>Kosmyna et al., “Your Brain on ChatGPT,” MIT Media Lab, June 2025 preprint (54 adult participants).</p></div>
+      <div class="srcrow"><span class="tag int">Integrity</span><strong>Hingham High School</strong><p>Harris v. Adams, U.S. District Court (D. Mass.), ruling Nov. 20, 2024. District AI policy adopted May 2025 (Hingham Anchor, May 20, 2025).</p></div>
+      <div class="srcrow"><span class="tag int">Integrity</span><strong>Adelphi University</strong><p><a href="https://www.nycourts.gov/reporter/3dseries/2026/2026_26021.htm" target="_blank" rel="noopener">Matter of Newby v Adelphi Univ., 2026 NY Slip Op 26021</a>, Supreme Court, Nassau County, Jan. 28, 2026.</p></div>
+      <div class="srcrow"><span class="tag int">Integrity</span><strong>Palo Alto Unified complaint</strong><p>Allegations reported by <a href="https://www.almanacnews.com/palo-alto-schools/2026/05/11/parent-sues-palo-alto-school-district-over-artificial-intelligence-procedures/" target="_blank" rel="noopener">The Almanac / Palo Alto Online</a>, May 11, 2026.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>Hingham Middle School</strong><p><a href="https://www.bostonglobe.com/2026/04/09/metro/ai-generated-naked-deepfakes-in-schools/" target="_blank" rel="noopener">The Boston Globe</a>, Apr. 9, 2026.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>Lawton Chiles Middle School, Oviedo</strong><p><a href="https://www.clickorlando.com/news/local/2025/12/18/why-ai-and-a-student-with-a-clarinet-put-a-seminole-county-school-on-lockdown/" target="_blank" rel="noopener">WKMG News 6 (ClickOrlando)</a>, Dec. 18, 2025.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>Deepfakes and parents</strong><p>4% of parents said their school had communicated about deepfake risks and penalties. Center for Democracy &amp; Technology, “In Deep Trouble,” Sept. 2024.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>Teens and AI companions</strong><p>72% of teens 13 to 17 have used an AI companion. <a href="https://commonsensemedia.org/press-releases/nearly-3-in-4-teens-have-used-ai-companions-new-national-survey-finds" target="_blank" rel="noopener">Common Sense Media, “Talk, Trust, and Trade-Offs”</a>, July 2025.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>PowerSchool breach</strong><p>Student records exposed, including Social Security numbers, grades, and medical information. TechCrunch, 2025.</p></div>
+      <div class="srcrow"><span class="tag saf">Safety</span><strong>If a sexual image of a child is shared</strong><p><a href="https://takeitdown.ncmec.org/" target="_blank" rel="noopener">Take It Down</a>, a free service from the National Center for Missing &amp; Exploited Children.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>E. Brian Cox</strong>, AI Adoption, Governance &amp; Enablement Lead, i-Tech Support</p>
+    <p><a href="mailto:brian.cox@i-techsupport.com">brian.cox@i-techsupport.com</a> &middot; <a href="https://i-techsupport.com" target="_blank" rel="noopener">i-techsupport.com</a></p>
+  </div>
+</footer>
+
+<script>
+/* ===== Set these before the session ===== */
+const FOLDER_URL = 'https://drive.google.com/drive/folders/1p5fl0SvPcDvF2Tv2aQ9SXICWV6iXL0R6?usp=sharing';
+const KIT_URLS = {
+  teacher: 'https://drive.google.com/file/d/1XAPKwjKy0AydxzSiKq6q1AHzVEYhvE-5/view?usp=sharing',
+  admin: 'https://drive.google.com/file/d/1X7zRR2_wlM-Bf0LCjt9jx9AJpK9li8yQ/view?usp=sharing',
+  family: 'https://drive.google.com/file/d/11DQjelcD6bnwmI9_sXYvvhkvMTwZDdc0/view?usp=sharing'
+}; // direct links to each PDF; blank uses the folder link
+/* ======================================== */
+
+(function kits(){
+  const ready = FOLDER_URL && !FOLDER_URL.startsWith('[');
+  let any = false;
+  document.querySelectorAll('.kitlink').forEach(a => {
+    const url = KIT_URLS[a.dataset.file] || (ready ? FOLDER_URL : '');
+    if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+    else { a.removeAttribute('href'); a.setAttribute('aria-disabled','true'); a.textContent = 'Coming soon'; any = true; }
+  });
+  if (any) document.getElementById('kitnote').hidden = false;
+})();
+
+// Deep dive tabs
+document.querySelectorAll('#deep-dives .tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('#deep-dives .tab').forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false'));
+  document.querySelectorAll('#deep-dives .panel').forEach(p => p.hidden = p.id !== t.getAttribute('aria-controls'));
+}));
+
+// First-step cards
+const CARDS = {
+  monday:  { title:'Monday morning: one move, one classroom', prompts:['My focus: Joy, Integrity, or Safety','The one move I’ll try','The lesson, the class, and the day','How I’ll know it worked: what students will do','The colleague I’ll tell about it'] },
+  semester:{ title:'This semester: redesign one unit', prompts:['The unit or assessment I’ll redesign','The protection that is weakest in it right now','The move I’ll build in, and where it goes','What students will do differently, and how I’ll see it','The date I’ll check how it went'] },
+  school:  { title:'School-wide: one change to make', prompts:['The protection our school asks about least','One policy or handbook line to add or revisit','Who needs to be in the room to decide it','What we’ll tell families, and when','The date of the first conversation'] }
+};
+let current = 'monday';
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem('fcis-card-'+k) || '[]'); } catch(e){ return []; } },
+  set(k,v){ try { localStorage.setItem('fcis-card-'+k, JSON.stringify(v)); } catch(e){} }
+};
+function renderCard(){
+  const c = CARDS[current], saved = store.get(current), box = document.getElementById('fields');
+  document.getElementById('cardtitle').textContent = c.title;
+  box.innerHTML = '';
+  c.prompts.forEach((p,i) => {
+    const d = document.createElement('div'); d.className = 'field';
+    const id = 'f-'+current+'-'+i;
+    d.innerHTML = '<label for="'+id+'"></label><textarea id="'+id+'"></textarea>';
+    d.querySelector('label').textContent = (i+1)+'. '+p;
+    const ta = d.querySelector('textarea'); ta.value = saved[i] || '';
+    ta.addEventListener('input', () => { const v = store.get(current); v[i] = ta.value; store.set(current, v); });
+    box.appendChild(d);
+  });
+  document.getElementById('status').textContent = '';
+}
+document.querySelectorAll('#first-step .tab').forEach(t => t.addEventListener('click', () => {
+  current = t.dataset.card;
+  document.querySelectorAll('#first-step .tab').forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false'));
+  renderCard();
+}));
+document.getElementById('copybtn').addEventListener('click', async () => {
+  const c = CARDS[current]; const vals = [...document.querySelectorAll('#fields textarea')].map(t => t.value.trim());
+  const text = c.title + '\n\n' + c.prompts.map((p,i) => (i+1)+'. '+p+'\n'+(vals[i] || '')).join('\n\n');
+  const st = document.getElementById('status');
+  try { await navigator.clipboard.writeText(text); st.textContent = 'Copied. Paste it into your notes or an email.'; }
+  catch(e){ st.textContent = 'Copy is blocked here. Select the text and copy it manually.'; }
+});
+document.getElementById('printbtn').addEventListener('click', () => window.print());
+renderCard();
+</script>
+</body>
+</html>

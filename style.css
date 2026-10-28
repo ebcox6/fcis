@@ -1,0 +1,6 @@
+:root{--navy:#001e62;--orange:#ef7225;--blue:#006cff;--ink:#001e62;--ink2:#42486a;--bg:#ffffff;--panel:#f1f1f4;--line:#d8d7df;--card:#ffffff}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Nunito',Arial,sans-serif;color:var(--ink);background:var(--bg);-webkit-text-size-adjust:100%}
+h1,h2,h3,button,.pill{font-family:'Poppins',Arial,sans-serif}
+button{cursor:pointer}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room Poll Router: Console</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;900&family=Nunito:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="qrcode.js"></script>
+<style>
+html,body{height:100%;overflow:hidden;background:#f6f6f9}
+.screen{position:absolute;inset:0;padding:4.5vh 5vw 9vh;display:none;flex-direction:column;gap:2.4vh}
+.screen.on{display:flex}
+.eyebrow{font-family:'Poppins',Arial,sans-serif;font-weight:700;letter-spacing:.25vw;text-transform:uppercase;color:var(--blue);font-size:1.4vw;margin:0}
+h1.big{font-size:4.6vw;line-height:1.05;margin:0;font-weight:900}
+h2.mid{font-size:3.2vw;line-height:1.1;margin:0}
+.row{display:flex;gap:3vw;flex:1;min-height:0}
+.panel{background:#fff;border-radius:1.4vw;padding:2.4vw;box-shadow:0 .2vw 1vw rgba(0,30,98,.06)}
+.qr{background:#fff;border-radius:1vw;padding:1vw;width:28vw;height:28vw;display:flex;align-items:center;justify-content:center}
+.qr svg{width:100%;height:100%}
+.url{font-size:1.5vw;color:var(--ink2);word-break:break-all;margin:1vh 0 0}
+.count{font-family:'Poppins',Arial,sans-serif;font-size:7vw;font-weight:900;color:var(--orange);line-height:1}
+.cloud{display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:.6vw 1.6vw;flex:1;overflow:hidden}
+.cloud span{font-family:'Poppins',Arial,sans-serif;font-weight:700;line-height:1;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw;flex:1;min-height:0}
+.tile{background:#fff;border-radius:1.2vw;padding:1.4vw 1.6vw;display:flex;flex-direction:column;gap:.9vh;min-height:0;overflow:hidden}
+.tile h3{font-size:1.5vw;margin:0 0 .4vh}
+.brow{display:flex;flex-direction:column;gap:.3vh}
+.brow p{margin:0;font-size:1.25vw;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:1.6vh;background:var(--panel);border-radius:1vh;overflow:hidden}
+.fill{height:100%;background:var(--blue);border-radius:1vh;transition:width .5s}
+.verdict{font-size:6vw;font-weight:900;line-height:1;margin:0}
+.sbar{display:flex;align-items:center;gap:1.4vw;margin:0 0 1.6vh}
+.sbar p{margin:0;width:16vw;font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:1.6vw}
+.sbar .track{flex:1;height:3.4vh}
+.sbar span{width:6vw;text-align:right;font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:1.6vw}
+ul.means{margin:0;padding:0 0 0 1.6vw;font-size:2vw;line-height:1.6}
+.badge{display:inline-block;max-width:40vw;line-height:1.35;background:var(--orange);color:var(--navy);font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:1.5vw;padding:.8vh 1.4vw;border-radius:1vw}
+.go{background:var(--orange);color:var(--navy);border:none;border-radius:99px;font-weight:700;font-size:1.8vw;padding:1.8vh 3vw}
+#decode{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);grid-auto-flow:column;gap:0 3vw}
+.dec{display:flex;gap:1.2vw;align-items:flex-start;padding:1.4vh 0;border-top:.15vw solid var(--line)}
+.dec:nth-child(3n+1){border-top:none}
+.dec .n{font-family:'Poppins',Arial,sans-serif;font-weight:900;font-size:2vw;color:var(--orange);width:3vw}
+.dec h3{font-size:1.7vw;margin:0}
+.dec p{margin:.3vh 0 0;font-size:1.3vw;line-height:1.35;color:var(--ink2)}
+.dec .tag{flex:0 0 auto;font-family:'Poppins',Arial,sans-serif;font-weight:700;font-size:1.1vw;background:var(--navy);color:#fff;padding:.5vh 1vw;border-radius:99px}
+.prompt{background:var(--navy);color:#fff;border-radius:1.4vw;padding:2.4vw;font-size:1.7vw;line-height:1.55}
+.prompt b{color:var(--orange);font-family:'Poppins',Arial,sans-serif}
+.snaps{display:flex;gap:1.6vw;flex:1;min-height:0}
+.snap{flex:1;background:#fff;border-radius:1.2vw;padding:1.2vw;display:flex;flex-direction:column;gap:1vh;border:.3vw solid transparent;min-height:0}
+.snap.win{border-color:var(--orange)}
+.snap h3{margin:0;font-size:1.5vw}
+.snap .img{flex:1;min-height:0;background:var(--panel);border-radius:.8vw;display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:1.2vw;overflow:hidden}
+.snap img{width:100%;height:100%;object-fit:contain}
+#bar{position:fixed;left:0;right:0;bottom:0;height:6vh;display:flex;align-items:center;gap:.8vw;padding:0 190px 0 2vw;background:#fff;border-top:1px solid var(--line);z-index:5}
+#bar button{border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:99px;padding:.6vh 1.2vw;font-size:.95vw;font-weight:700}
+#bar button.cur{background:var(--navy);border-color:var(--navy);color:#fff}
+#bar .sp{flex:1}
+#status{font-size:.95vw;color:var(--ink2)}
+.hidebar #bar{display:none}
+.demo{color:var(--orange);font-weight:700}
+</style>
+</head>
+<body>
+<section class="screen" id="s1">
+  <p class="eyebrow" id="sub"></p>
+  <h1 class="big">Before we start: a quick warm-up</h1>
+  <div class="row">
+    <div style="display:flex;flex-direction:column;align-items:flex-start">
+      <div class="qr" id="qr"></div>
+      <p class="url" id="url"></p>
+    </div>
+    <div class="panel" style="flex:1;display:flex;flex-direction:column;gap:1vh">
+      <div style="display:flex;align-items:baseline;gap:1.4vw"><span class="count" id="n">0</span><span style="font-size:1.8vw;color:var(--ink2)">people have weighed in</span></div>
+      <p class="eyebrow" style="color:var(--orange)" id="warm"></p>
+      <div class="cloud" id="cloud"></div>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s2">
+  <p class="eyebrow">Where the room stands</p>
+  <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 class="mid">Live results</h2><span style="font-size:1.8vw;color:var(--ink2)"><b id="n2" style="color:var(--orange);font-family:Poppins,Arial,sans-serif">0</b> responses</span></div>
+  <div class="grid" id="grid"></div>
+</section>
+<section class="screen" id="s3">
+  <p class="eyebrow">Today’s deep dive (presenter only)</p>
+  <div class="row">
+    <div style="flex:1;display:flex;flex-direction:column;gap:2vh">
+            <p class="verdict" id="verdict"></p>
+      <div id="badge"></div>
+      <ul class="means" id="means"></ul>
+      <div><button class="go" id="start">Start the session</button> <span id="startmsg" style="font-size:1.3vw;color:var(--ink2)"></span></div>
+    </div>
+    <div class="panel" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+      <p class="eyebrow" style="margin-bottom:2.4vh">The score</p>
+      <div id="sbars"></div>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s4">
+  <p class="eyebrow">The reveal</p>
+  <h2 class="mid">Your answers quietly chose today’s deep dive.</h2>
+  <div class="panel" style="flex:1;min-height:0;overflow:hidden" id="decode"></div>
+</section>
+
+<div id="bar">
+  <button data-go="1">1 Join</button><button data-go="2">2 Live</button><button data-go="3">3 Decision</button><button data-go="4">4 Decode</button>
+  <span class="sp"></span><span id="status"></span>
+  <button id="lock">Lock results</button><button id="demo">Demo data</button><button id="hide" title="Press H to show again">Hide bar</button>
+</div>
+<script src="config.js"></script>
+<script src="quiz.js"></script>
+<script src="db.js"></script>
+<script>
+var C=window.RPR_CONFIG,Q=window.RPR_QUIZ,P=Q.paths;
+var sid=new URLSearchParams(location.search).get("s")||C.session;
+var LKEY="rpr-lock-"+sid,live=[],demo=false,locked=null,hidden={};
+try{locked=JSON.parse(localStorage.getItem(LKEY)||"null");}catch(e){}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function data(){return locked||live;}
+document.getElementById("sub").textContent=C.title+" · "+C.subtitle;
+document.getElementById("warm").textContent=Q.warmup;
+var base=location.href.split("?")[0].replace(/console\.html$/,""),vurl=base+(base.endsWith("/")?"":"/")+"?s="+encodeURIComponent(sid);
+document.getElementById("url").textContent=vurl.replace(/^https?:\/\//,"");
+try{var qr=qrcode(0,"M");qr.addData(vurl);qr.make();document.getElementById("qr").innerHTML=qr.createSvgTag({cellSize:8,margin:2,scalable:true});}catch(e){document.getElementById("qr").innerHTML='<p style="font-size:1.4vw;text-align:center">QR unavailable. Share the link below.</p>';}
+
+/* screens */
+var cur=1;
+function show(n){cur=n;for(var i=1;i<=4;i++)document.getElementById("s"+i).classList.toggle("on",i===n);
+  [].forEach.call(document.querySelectorAll("[data-go]"),function(b){b.classList.toggle("cur",+b.getAttribute("data-go")===n);});render();}
+document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){show(+b.getAttribute("data-go"));};});
+document.addEventListener("keydown",function(e){if(e.target.tagName==="INPUT")return;
+  if(e.key>="1"&&e.key<="4")show(+e.key);else if(e.key==="ArrowRight"||e.key===" ")show(Math.min(4,cur+1));else if(e.key==="ArrowLeft")show(Math.max(1,cur-1));
+  else if(e.key==="h"||e.key==="H")document.body.classList.toggle("hidebar");
+  else if(e.key==="s"||e.key==="S")document.getElementById("start").click();});
+document.getElementById("hide").onclick=function(){document.body.classList.add("hidebar");};
+
+function tally(q,votes){var c=q.options.map(function(){return 0;}),n=0;
+  votes.forEach(function(v){var x=v.a&&v.a[q.id];if(q.rank){if(Array.isArray(x)&&x.length&&c[x[0]]!=null){c[x[0]]++;n++;}}else if(typeof x==="number"&&c[x]!=null){c[x]++;n++;}});
+  return {c:c,n:n};}
+function render(){
+  var v=data(),r=window.RPR_SCORE(v);
+  document.getElementById("n").textContent=v.length;document.getElementById("n2").textContent=v.length;
+  document.getElementById("status").innerHTML=(demo?'<span class="demo">DEMO DATA</span> · ':'')+(locked?"Results locked":"Live")+" · session "+esc(sid);
+  document.getElementById("lock").textContent=locked?"Unlock results":"Lock results";
+  if(cur===1){var f={};v.forEach(function(x){var w=(x.w||"").trim().toLowerCase();if(w&&!hidden[w])f[w]=(f[w]||0)+1;});
+    var ws=Object.keys(f).sort(function(a,b){return f[b]-f[a];}).slice(0,40),mx=ws.length?f[ws[0]]:1,cols=["#001e62","#006cff","#ef7225","#42486a"];
+    document.getElementById("cloud").innerHTML=ws.length?ws.map(function(w,i){return '<span title="Click to hide" data-w="'+esc(w)+'" style="font-size:'+(1.4+3.6*f[w]/mx).toFixed(2)+'vw;color:'+cols[i%4]+'">'+esc(w)+'</span>';}).join(""):'<p style="font-size:1.6vw;color:var(--ink2)">Words appear here as people answer.</p>';
+    [].forEach.call(document.querySelectorAll("#cloud span"),function(s){s.onclick=function(){hidden[s.getAttribute("data-w")]=true;render();};});}
+  if(cur===2){document.getElementById("grid").innerHTML=Q.questions.map(function(q,i){var t=tally(q,v);
+    return '<div class="tile"><h3>'+(i+1)+'. '+esc(q.short)+(q.rank?' <span style="font-size:1vw;color:var(--ink2)">(top pick)</span>':'')+'</h3>'+q.options.map(function(o,j){var p=t.n?Math.round(t.c[j]/t.n*100):0;
+      return '<div class="brow"><p>'+esc(o[0])+' · <b>'+p+'%</b></p><div class="track"><div class="fill" style="width:'+p+'%;background:'+(p&&p===Math.max.apply(null,t.c.map(function(x){return t.n?Math.round(x/t.n*100):0;}))?'var(--orange)':'var(--blue)')+'"></div></div></div>';}).join("")+'</div>';}).join("");}
+  if(cur===3){var w=r.winner;
+    document.getElementById("verdict").textContent=w?P[w].name:"Waiting for votes";
+    document.getElementById("verdict").style.color=w?P[w].color:"var(--ink2)";
+    document.getElementById("badge").innerHTML=w?'<span class="badge">Press S to open the '+esc(P[w].name)+' deck</span>':'';
+    document.getElementById("means").innerHTML=w?P[w].means.map(function(m){return '<li>'+esc(m)+'</li>';}).join(""):"";
+    var tot=r.scores.J+r.scores.I+r.scores.S||1;
+    document.getElementById("sbars").innerHTML=Q.order.map(function(k){var p=Math.round(r.scores[k]/tot*100);return '<div class="sbar"><p style="color:'+P[k].color+'">'+P[k].name+'</p><div class="track"><div class="fill" style="width:'+p+'%;background:'+P[k].color+'"></div></div><span>'+p+'%</span></div>';}).join("")+
+      '<p style="font-size:1.3vw;color:var(--ink2);margin:1vh 0 0">'+r.voters+' voters. Question 1 counts double. Role and grade questions do not count.</p>';}
+  if(cur===4){document.getElementById("decode").innerHTML=Q.questions.map(function(q,i){var t=tally(q,v),bi=t.c.indexOf(Math.max.apply(null,t.c)),p=t.n?Math.round(t.c[bi]/t.n*100):0;
+    return '<div class="dec"><span class="n">'+(i+1)+'</span><div style="flex:1"><h3>'+esc(q.short)+'</h3><p>'+esc(q.decode)+(t.n?' Room\u2019s top answer: <b>'+esc(q.options[bi][0])+'</b> ('+p+'%).':'')+'</p></div><span class="tag">'+esc(q.component)+'</span></div>';}).join("");}
+
+}
+document.getElementById("start").onclick=function(){var r=window.RPR_SCORE(data()),w=r.winner,m=document.getElementById("startmsg");
+  if(!w){m.textContent="No votes yet.";return;}
+  if(!locked)lockNow();
+  var u=C.decks&&C.decks[w];if(u){window.open(u,"_blank");m.textContent="";}else{m.textContent="[Deck link for "+P[w].name+" not set in config.js]";document.getElementById("status").textContent="Deck link for "+P[w].name+" not set";}};
+function lockNow(){locked=data().slice();try{localStorage.setItem(LKEY,JSON.stringify(locked));}catch(e){}}
+document.getElementById("lock").onclick=function(){if(locked){locked=null;try{localStorage.removeItem(LKEY);}catch(e){}}else lockNow();render();};
+document.getElementById("demo").onclick=function(){demo=!demo;if(demo){live=fake(46);}else{live=[];}render();this.textContent=demo?"Stop demo":"Demo data";};
+function fake(n){var words=["helpful","curious","cautious","overwhelming","promising","scary","fast","useful","cheating","excited","unsure","tool","messy","helpful","curious","useful"],out=[];
+  for(var i=0;i<n;i++){var a={};Q.questions.forEach(function(q){var k=q.options.length,bias=Math.random()<0.45?2:Math.floor(Math.random()*k);
+    if(q.rank){var o=[0,1,2,3].sort(function(){return Math.random()-.5;});if(Math.random()<.4){o.splice(o.indexOf(1),1);o.unshift(1);}a[q.id]=o;}else a[q.id]=Math.min(bias,k-1);});
+    out.push({w:words[Math.floor(Math.random()*words.length)],a:a});}return out;}
+(async function(){var db=await window.RPR_DB;
+  if(!db){document.getElementById("status").innerHTML='<span class="demo">Not connected. Use Demo data, or add Firebase settings to config.js.</span>';return;}
+  db.watch(function(v){if(!demo){live=v;render();}},function(e){document.getElementById("status").textContent="Database error: "+e.code;});})();
+show(1);
+</script>
+</body>
+</html>

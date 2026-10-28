@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Anonymous votes: anyone can add or update one vote, read the tallies, never delete.
+    match /sessions/{sessionId}/votes/{voteId} {
+      allow read: if true;
+      allow create, update: if request.resource.data.keys().hasOnly(['w', 'a', 't'])
+        && request.resource.data.w is string
+        && request.resource.data.w.size() <= 24
+        && request.resource.data.a is map
+        && request.resource.data.a.size() <= 6
+        && request.resource.data.t == request.time;
+      allow delete: if false;
+    }
+  }
+}
